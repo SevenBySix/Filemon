@@ -1,1 +1,2 @@
 Add text to me
+If you dont know how to use git then this is your file to play with
