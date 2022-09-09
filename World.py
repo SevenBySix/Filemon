@@ -34,8 +34,26 @@ class World(object):
             self.filenames.append(filename)
         pass
 
-    def generateWorld(self):
+    def generateWorld(self, characterPosition):
         print(self.filenames)
+        character = "@"
+        worldSize = len(self.filenames)
+        finishedWorld = ''
+        position = 0
+        for filename in self.filenames:
+            if position == characterPosition:
+                partialLine = '|       ' + character + ' ' + filename
+            else:
+                partialLine = '|         ' +  filename
+
+            for i in range(len(partialLine), 60):
+                partialLine += ' '
+            partialLine += '|\n'
+            finishedWorld += partialLine
+            position+=1
+
+
+        print(finishedWorld)
         pass
 
     def clearScreen(object):

@@ -8,7 +8,8 @@ def play_game(object):
     startingPath = '''C:/Users'''
     world = World.World(startingPath)
     world.populateFilenames()
-    world.generateWorld()
+    world.generateWorld(4)
+    
     pass
 
 
