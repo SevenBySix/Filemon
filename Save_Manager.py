@@ -4,11 +4,27 @@ This text file will ultimately be the players save file
 
 '''
 
-class Save_Manager(object):
+class Save_Manager():
+
+    def __init__(self):
+
+        pass
 
 
+    '''
+    This should log the players position within their file structure 
+    
+    '''
+    def writePosition(self):
 
-    pass
+        pass
+    '''
+    This should return a string corresponding to the path that the world
+    needs to start in
+    '''
+    def readPosition(self):
+
+        pass
 
 
 

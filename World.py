@@ -1,8 +1,8 @@
 import os
-    
+
 class World(object):
     #                                                            61 accross
-    
+    #this just helps visualize what the screen looks like
     world = '''
     |                                                            |
     |                                                            |
@@ -34,7 +34,21 @@ class World(object):
             self.filenames.append(filename)
         pass
 
+    def clearScreen():#this should clear the screen, however it does not work
+        if os.name == 'nt':
+             
+             os.system('cls')
+        else:
+             os.system('clear')
+             
+        
+        
+
     def generateWorld(self, characterPosition):
+        clear = "\n" * 100 #This is a really ghetto workaround for clearScreen() not working
+                           #The purpose of having a clear screen is to make the world look good
+        print(clear)
+
         print(self.filenames)
         character = "@"
         worldSize = len(self.filenames)
