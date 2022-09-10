@@ -22,17 +22,27 @@ def play_game(object):
     playerPosition = 0
     isFinished = False
     world.generateWorld(playerPosition)
+    
+    inputLock = False
+    inputUsed = False
+
     while(not isFinished):
+
+        input = Interface.getKeyPress()
         
-        if(Interface.getKeyPress() == 's'):
-            playerPosition+=1 #to be replaced with something that alters position in save_manager
+        if(input == 's'):
+
+            playerPosition+=1 #to be replaced with something that updates the player objects position
             world.generateWorld(playerPosition)
+                       
+        
             
-        if(Interface.getKeyPress() == 'w'):
+        
+        if(input == 'w'):
             playerPosition-=1
             world.generateWorld(playerPosition)
             
-        time.sleep(1)
+        time.sleep(.3) #helps prevent unwanted input from holding down keypress
     pass
 
 
