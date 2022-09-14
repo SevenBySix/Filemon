@@ -8,9 +8,16 @@ class so our source code isnt full of attempts at working with files and writing
 
 
 '''
+
+
+#player will need to hold a vertical location and its path, its name, filemon array
+
 class Player(object):
-    def __init__(self):
-        pass
+    
+    def __init__(self, directory, pos):
+        self.currentDir = directory
+        self.position = pos
+        
 
     def writeToSave(self):
         #end state, should look something like Save_manager.write(self)
