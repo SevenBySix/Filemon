@@ -15,8 +15,8 @@ class so our source code isnt full of attempts at working with files and writing
 class Player(object):
     
     def __init__(self, directory, pos):
-        self.currentDir = directory
-        self.position = pos
+        self.currentDir = directory #THIS IS A STRING REPRESENTING A PATH
+        self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         
 
     def writeToSave(self):

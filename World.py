@@ -44,7 +44,7 @@ class World(object):
              os.system('cls')
         else:
              os.system('clear')
-             
+    
     def moveIntoDir(self, player):
         iterator = 0
         print(player.currentDir)
@@ -52,16 +52,34 @@ class World(object):
         for file in os.scandir(player.currentDir):
             if file.is_dir:
                 print('its a dir')
-                if iterator == player.position:
-                    player.currentDir = file.path
-                    print("currentPosition updated")
-                    print(player.currentDir)
-                    self.populateFilenames(player)
-                    player.position = 0
-                    return player.currentDir
+                try:
+                    if iterator == player.position:
+                        print('prior')
+                        
+                        
+                        try:
+                            os.scandir(file.path)
+                        except:
+                            print('NO ACCESS')
+                            return ('NO_ACCESS')
+                        
+                            
+                        player.currentDir = file.path
+                        print("currentPosition updated")
+                        print(player.currentDir)
+                        self.populateFilenames(player)
+                        player.position = 0
+                        return player.currentDir
+                except:
+                    return ("NOT_ACCESSIBLE")
+
             iterator+=1
-        
-        
+    
+    #example path: C:\Program Files\ASUS\Aac_Mouse
+    def movePrevDir(self, player):
+        player.currentDir = os.path.dirname(player.currentDir)
+        self.populateFilenames(player)
+        return player.currentDir
 
     def generateWorld(self, characterPosition, player):
         clear = "\n" * 10 #This is a really ghetto workaround for clearScreen() not working

@@ -44,8 +44,11 @@ def play_game(object):
             
             pass
         if(input == 'a'):
+            
+            world.movePrevDir(player)
+            world.generateWorld(player.position, player)
 
-            pass
+            
         
         if(input == 'w'):
             player.position-=1
