@@ -39,9 +39,14 @@ def play_game(object):
             world.generateWorld(player.position, player)
         if(input == 'd'):
             #go into directory at 
-            world.moveIntoDir(player)            
+            status = world.moveIntoDir(player)            
             world.generateWorld(player.position, player)
-            
+
+            if(isinstance(status, os.stat_result)):
+                #FILEMONCODE HERE
+                pass
+        if(input == 'e'):
+
             pass
         if(input == 'a'):
             

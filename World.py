@@ -50,10 +50,11 @@ class World(object):
         print(player.currentDir)
         print(player.position)
         for file in os.scandir(player.currentDir):
-            if file.is_dir:
+            if file.is_dir():
+                print(file.is_dir())
                 print('its a dir')
-                try:
-                    if iterator == player.position:
+                
+                if iterator == player.position:
                         print('prior')
                         
                         
@@ -69,10 +70,11 @@ class World(object):
                         print(player.currentDir)
                         self.populateFilenames(player)
                         player.position = 0
-                        return player.currentDir
-                except:
-                    return ("NOT_ACCESSIBLE")
-
+                        return player.currentDir                    
+            else:
+                print('Filemon')
+                print(file.stat())
+                return file.stat()
             iterator+=1
     
     #example path: C:\Program Files\ASUS\Aac_Mouse
