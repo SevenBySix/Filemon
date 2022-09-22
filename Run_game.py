@@ -7,7 +7,7 @@ import Interface
 import os
 import time
 import Player
-
+import Server
 def play_game():
     
     
