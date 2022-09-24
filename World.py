@@ -4,7 +4,7 @@ import Player
 class World(object):
     #                                                            61 accross
     #this just helps visualize what the screen looks like
-    world = '''
+    screen = '''
     |                                                            |
     |                                                            |
     |                                                            |
@@ -84,10 +84,7 @@ class World(object):
         return player.currentDir
 
     def generateWorld(self, characterPosition, player):
-        clear = "\n" * 10 #This is a really ghetto workaround for clearScreen() not working
-                           #The purpose of having a clear screen is to make the world look good
-
-        print(clear)
+        
         self.populateFilenames(player)
         
         character = "@"

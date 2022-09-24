@@ -9,15 +9,7 @@
 #came from, or in the case of trading deleting it and adding the newly recieved mon instance
 
 class Mon(object):
-    def __init__(self):
-
+    def __init__(self, fileStats):
+        self.rawStats = fileStats
         pass
     
-    
-    
-    
-    pass
-
-
-
-

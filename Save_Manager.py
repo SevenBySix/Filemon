@@ -1,6 +1,6 @@
 '''
-Player information will be stored as a json object in a folder called "saves".
-This json object will store Player name, location, and the player's filemon.
+This will save the player's information: name(?), position, and filemon, as a json object that will be 
+stored in a folder called "Saves".
 
 '''
 
