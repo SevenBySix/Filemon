@@ -1,6 +1,6 @@
 '''
-We are going to need something that writes to some sort of text file
-This text file will ultimately be the players save file
+This will save the player's information: name(?), position, and filemon, as a json object that will be 
+stored in a folder called "Saves".
 
 '''
 
