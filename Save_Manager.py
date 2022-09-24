@@ -3,6 +3,7 @@ This will save the player's information: name(?), position, and filemon, as a js
 stored in a folder called "Saves".
 
 '''
+import json
 
 class Save_Manager():
 
@@ -10,21 +11,23 @@ class Save_Manager():
 
         pass
 
-
-    '''
-    This should log the players position within their file structure 
-    
-    '''
-    def writePosition(self):
-
+    '''Saves player infromation as a json object in the saves folder'''
+    def saveGame(currentDir, pos, filemons):
+        playerInfo = {
+            "currentDir": currentDir,
+            "position": pos,
+            "filemon": filemons
+        }
+        
+        json_save = json.dumps(playerInfo, indent=4)
+        '''will eventually be something like open("Saves/save.json", "w")'''
+        with open("", "w") as outfile:
+            outfile.write(json_save)
+  
+    def loadGame():
+        
         pass
-    '''
-    This should return a string corresponding to the path that the world
-    needs to start in
-    '''
-    def readPosition(self):
-
-        pass
+   
 
 
 
