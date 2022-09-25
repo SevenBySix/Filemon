@@ -20,8 +20,7 @@ class Save_Manager():
         }
         
         json_save = json.dumps(playerInfo, indent=4)
-        '''will eventually be something like open("Saves/save.json", "w")'''
-        with open("", "w") as outfile:
+        with open("GameSaves/save.json", "w") as outfile:
             outfile.write(json_save)
   
     def loadGame():
