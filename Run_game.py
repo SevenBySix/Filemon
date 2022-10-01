@@ -23,7 +23,7 @@ def play_game():
     world = World.World(player.currentDir, player.position)
     world.populateFilenames(player)
     isFinished = False
-    
+    filemon = None #temporary filemon instance
     interface = Interface.Interface()
     print(interface.startScreen)
 
@@ -84,7 +84,7 @@ def play_game():
                 pass
             
             case 'BATTLE':
-                pass
+                interface.battle(player, filemon, input)
             
             case 'TRADE':
                 pass
