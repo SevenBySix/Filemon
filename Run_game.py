@@ -32,7 +32,7 @@ def play_game():
     
     print(interface.startScreen)
     interface.printHud()
-    logText = ""
+    textToAdd = ""
 
     while(not isFinished):
         #we should somehow clear our terminal sessions output here
@@ -69,23 +69,23 @@ def play_game():
                     if(isinstance(status[1], os.stat_result)):
                         #FILEMONCODE HERE
                         
-                        interface.addtoLog("its a " + status[0])
+                        textToAdd = ("its a " + status[0])
                         
 
                         pass
                 if(input == 'e'):
                     status = world.interact(player)
                     if isinstance(status, os.DirEntry):
-                        interface.addToLog("its a " + status.name)
+                        textToAdd = (" | its a " + status.name)
                         
                         
                         filemon = Mon.Mon(status.name, status.stat())
-                        print(filemon.name)
-                        print(filemon.rawStats)
+                        #print(filemon.name)
+                        #print(filemon.rawStats)
 
-                    else:#therefore world.interact returned a file
+                    else:
                         
-                        print(status)
+                        textToAdd = (" | " + status)
                         
                 if(input == 'a'):
             
@@ -101,6 +101,8 @@ def play_game():
                     pass
 
                 interface.addToLog(player.currentDir)
+                interface.addToLog(textToAdd)
+                textToAdd = ""
                 world.generateWorld(player.position, player)
             
             case 'BATTLE':
