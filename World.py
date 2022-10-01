@@ -47,12 +47,13 @@ class World(object):
     
     def moveIntoDir(self, player):
         iterator = 0
-        print(player.currentDir)
-        print(player.position)
+        #print(player.currentDir)
+        #print(player.position)
         for file in os.scandir(player.currentDir):
+            
             if file.is_dir():
-                print(file.is_dir())
-                print('its a dir')
+                #print(file.is_dir())
+                #print('its a dir')
                 
                 if iterator == player.position:
                         print('prior')
@@ -66,15 +67,15 @@ class World(object):
                         
                             
                         player.currentDir = file.path
-                        print("currentPosition updated")
-                        print(player.currentDir)
+                        #print("currentPosition updated")
+                        #print(player.currentDir)
                         self.populateFilenames(player)
                         player.position = 0
                         return player.currentDir                    
             else:
-                print('Filemon')
-                print(file.stat())
-                return file.stat()
+                #print('Filemon')
+                #print(file.stat())
+                return (file.name, file.stat())
             iterator+=1
     
     #example path: C:\Program Files\ASUS\Aac_Mouse

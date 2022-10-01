@@ -58,9 +58,13 @@ def play_game():
                     status = world.moveIntoDir(player)            
                     world.generateWorld(player.position, player)
 
-                    if(isinstance(status, os.stat_result)):
+                    if(isinstance(status[1], os.stat_result)):
                         #FILEMONCODE HERE
                         #
+                        print("FILEMON running")
+                        print(status[0])
+                        print(status[1])
+
                         pass
                 if(input == 'e'):
 
