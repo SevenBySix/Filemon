@@ -28,14 +28,28 @@ class Interface(object):
 |                                                            |
 |                                                            |
 |                                                            |'''
+        self.log = ''
         
 
     def printHud(self):
               #remember the game screen is 60 characters long           v60v
               #123456789012345678901234567890123456789012345678901234567890
-        print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC|")
+        print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC |")
         pass
 
+    def addToLog(self, new):
+        
+        self.log += new
+        pass
+
+    def clearLog(self):
+        self.log = ''
+        pass
+
+    def printLog(self):
+        
+        print(self.log)
+        
     def setModeStart(self):
         self.mode = MODES.START
 
@@ -94,15 +108,15 @@ class Interface(object):
 
     def battle(self, player, filemon, input):
         #This function will be called upon interacting with a wild(or rather unowned) filemon
-        screen = '''                                                                                               │  World.py
-|                                                            |                                                     │~
-|    [playerMon]                               [enemyMon]    |                                                     │~
-|    (=========)                               (========)    |                                                     │~
-|                                                            |                                                     │~
-|                                                            |                                                     │~
-|                                                            |                                                     │~
-|   >Fight  Inventory                                        |                                                     │~
-|    Info   Flee                                             |                                                     │~
+        screen = '''
+|                                                            |
+|    [playerMon]                               [enemyMon]    |
+|    (=========)                               (========)    |
+|                                                            |
+|                                                            |
+|                                                            |
+|   >Fight  Inventory                                        |
+|    Info   Flee                                             |
 |    [    Battle Log                                    ]    |'''
         #sys.stdout.write("test")
         #sys.stdout.flush()
@@ -124,7 +138,7 @@ class Interface(object):
     def printHud(self):
                   #remember the game screen is 60 characters long           v60v
                   #123456789012345678901234567890123456789012345678901234567890
-            print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC|")
+            print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC |")
             pass
 
 
@@ -135,7 +149,7 @@ def getKeyPress():
 def printHud():
           #remember the game screen is 60 characters long           v60v
           #123456789012345678901234567890123456789012345678901234567890
-    print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC|")
+    print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC |")
 
 
 

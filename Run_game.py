@@ -2,11 +2,15 @@
 
 
 #this is the method that will likely contain the loop which makes the game go
+from msilib.schema import File
+import string
 import World
 import Interface
 import os
 import time
 import Player
+import Mon
+#import sys
 
 def play_game():
     
@@ -23,13 +27,18 @@ def play_game():
     world = World.World(player.currentDir, player.position)
     world.populateFilenames(player)
     isFinished = False
-    filemon = None #temporary filemon instance
+    filemon = Mon.Mon(None, None) #temporary filemon instance
     interface = Interface.Interface()
+    
     print(interface.startScreen)
+    interface.printHud()
+    logText = ""
 
     while(not isFinished):
         #we should somehow clear our terminal sessions output here
         input = Interface.getKeyPress()
+        os.system('cls')
+        interface.clearLog()
         match interface.mode:
             case 'START':
                 
@@ -50,38 +59,49 @@ def play_game():
                 if(input == 's'):
 
                     player.position+=1 
-                    world.generateWorld(player.position, player)
+                    #world.generateWorld(player.position, player)
                     
 
                 if(input == 'd'):
                     #go into directory at 
                     status = world.moveIntoDir(player)            
-                    world.generateWorld(player.position, player)
-
+                    #world.generateWorld(player.position, player)
                     if(isinstance(status[1], os.stat_result)):
                         #FILEMONCODE HERE
-                        #
-                        print("FILEMON running")
-                        print(status[0])
-                        print(status[1])
+                        
+                        interface.addtoLog("its a " + status[0])
+                        
 
                         pass
                 if(input == 'e'):
+                    status = world.interact(player)
+                    if isinstance(status, os.DirEntry):
+                        interface.addToLog("its a " + status.name)
+                        
+                        
+                        filemon = Mon.Mon(status.name, status.stat())
+                        print(filemon.name)
+                        print(filemon.rawStats)
 
-                    pass
+                    else:#therefore world.interact returned a file
+                        
+                        print(status)
+                        
                 if(input == 'a'):
             
                     world.movePrevDir(player)
-                    world.generateWorld(player.position, player)            
+                    #world.generateWorld(player.position, player)            
         
                 if(input == 'w'):
                     player.position-=1
-                    world.generateWorld(player.position, player)
+                    #world.generateWorld(player.position, player)
         
                 if(input == 'm'):
                     #MENU
                     pass
-                pass
+
+                interface.addToLog(player.currentDir)
+                world.generateWorld(player.position, player)
             
             case 'BATTLE':
                 interface.battle(player, filemon, input)
@@ -89,6 +109,7 @@ def play_game():
             case 'TRADE':
                 pass
 
+        interface.printLog()
         interface.printHud()
 
         time.sleep(.3) #helps prevent unwanted input from holding down keypress
