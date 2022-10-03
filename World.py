@@ -62,7 +62,7 @@ class World(object):
                     try:
                         os.scandir(file.path)
                     except:
-                        print('NO ACCESS')
+                        #print('NO ACCESS')
                         return ('NO_ACCESS')
                         
                             

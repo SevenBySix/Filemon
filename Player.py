@@ -19,6 +19,7 @@ class Player(object):
         self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         self.filemons = [] #The array of filemons
         
+    
 
     def writeToSave(self):
         #end state, should look something like Save_manager.write(self)
@@ -31,7 +32,7 @@ class Player(object):
         #the save manager should then set all necessary player fields to whatever attributes are contained in the save, I think this is the write way to do it
         pass
 
-
-    pass
+    def addFilemon(self, filemon):
+        self.filemons.append(filemon)
 
 

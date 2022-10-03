@@ -43,7 +43,7 @@ class Interface(object):
         pass
 
     def clearLog(self):
-        self.log = ''
+        self.log = '|'
         pass
 
     def printLog(self):
@@ -66,7 +66,7 @@ class Interface(object):
     def setModeTrade(self):
         self.mode = MODES.TRADE
 
-
+   
     def startMenu(self, input):
 
         constant = 63 #number of chars in the next menu item is
@@ -110,7 +110,7 @@ class Interface(object):
         #This function will be called upon interacting with a wild(or rather unowned) filemon
         screen = '''
 |                                                            |
-|    [playerMon]                               [enemyMon]    |
+|    [playerMon         ]            [enemyMon          ]    |
 |    (=========)                               (========)    |
 |                                                            |
 |                                                            |
@@ -120,9 +120,27 @@ class Interface(object):
 |    [    Battle Log                                    ]    |'''
         #sys.stdout.write("test")
         #sys.stdout.flush()
+        firstLine = '''
+|                                                            |'''
+        firstMon = player.filemons[0]
+        playerMonName = firstMon.name
+        enemyName = filemon.name
 
+        if(len(playerMonName) > 19):
+            ext = '.' + firstMon.type
+            playerMonName = playerMonName[:(len(playerMonName) - len(ext))] + ext
+        if(len(enemyName) > 19):
+            ext = '.' + filemon.type
+            enemyName = enemyName[:len(playerMonName) - len(ext)] + ext
+        
 
-        pass
+        sumChars = len(playerMonName) + len(enemyName) + 4
+        numSpaces = 50 - sumChars
+        nameLine = '|    ' + '[' + playerMonName + ']' + (' ' * numSpaces) + ' '  + '[' +enemyName + ']' + '    |'
+        print(nameLine)
+        print('debug')
+        return False #when finished return true
+        
 
     #prints all information related to the mon in a readable format
     #this will basically be the go to method whenever a mon needs to be represented in game
