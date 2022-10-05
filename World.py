@@ -33,7 +33,9 @@ class World(object):
     def populateFilenames(self, player):
         self.filenames = []
         for file in os.scandir(player.currentDir):
-            self.filenames.append(file.name)
+            if file.path not in player.previouslyEncountered:
+
+                self.filenames.append(file.name)
         #print(self.filenames)
         pass
 
@@ -45,6 +47,10 @@ class World(object):
         else:
              os.system('clear')
     
+    def checkNext(self, player, direction):
+        pass
+
+
     def moveIntoDir(self, player):
         iterator = 0
         #print(player.currentDir)
@@ -78,10 +84,11 @@ class World(object):
                     return (file.name, file.stat())
             iterator+=1
     #returns the current file, if its a dir does not go inside
-    def interact(self, player):
+    def interact(self, player, posFromPlayer):
+        targPos = player.position + posFromPlayer
         iterator = 0
         for file in os.scandir(player.currentDir):
-            if iterator == player.position:
+            if iterator == targPos:
                 if file.is_dir():
                     try:
                         os.scandir(file.path)

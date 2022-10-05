@@ -15,13 +15,13 @@ class Mon(object):
     '''('desktop.ini', 
     os.stat_result(st_mode=33206, st_ino=0, st_dev=0, st_nlink=0, st_uid=0, st_gid=0, 
     st_size=174, st_atime=1664644343, st_mtime=1622894933, st_ctime=1622894933))'''
-    def __init__(self, name, fileStats):
+    def __init__(self, name, fileStats, path):
         self.name = name
         self.rawStats = fileStats
         self.type = self.getExt(name)
         '''just (hp, attack) to start off with'''
         self.stats = (self.rawStats[6]%1000, hash((self.type))%100)
-
+        self.path = path
 
     def getExt(self, name):
         '''if(len(name) < 4):

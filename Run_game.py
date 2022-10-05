@@ -29,7 +29,7 @@ def play_game():
     world = World.World(player.currentDir, player.position)
     world.populateFilenames(player)
     isFinished = False
-    filemon = Mon.Mon('', [0,0,0,0,0,0,0,0,0]) #temporary filemon instance
+    filemon = Mon.Mon('', [0,0,0,0,0,0,0,0,0], '') #temporary filemon instance
     interface = Interface.Interface()
     
     print(interface.startScreen)
@@ -67,8 +67,14 @@ def play_game():
             case 'WOLRD':
                 
                 if(input == 's'):
-
-                    player.position+=1 
+                    status = world.interact(player, 1)
+                    
+                    if (isinstance(status, os.DirEntry)) and (status.path in player.previouslyEncountered):
+                        
+                        player.position +=2
+                    else:
+                        player.position+=1
+                    
                     #world.generateWorld(player.position, player)
                     
 
@@ -84,7 +90,7 @@ def play_game():
 
                         pass
                 if(input == 'e'):
-                    status = world.interact(player)
+                    status = world.interact(player, 0)
 
                     if isinstance(status, os.DirEntry):
                         if(startingFlag and not confirm):
@@ -93,10 +99,10 @@ def play_game():
                         elif(startingFlag):
                             pass
                         else:
-                            textToAdd = (" | its a " + status.name + " | press e again to engage")
+                            textToAdd = (" | its a " + status.name + " | press e again to engage" + ' DEBUG: ' + status.path)
                         
                         
-                        filemon = Mon.Mon(status.name, status.stat())
+                        filemon = Mon.Mon(status.name, status.stat(), status.path)
                         q = False #basically a simple fix for preventing unwanted action with confirmation action and startingflag
                         if(confirm):
                             #start
@@ -119,10 +125,6 @@ def play_game():
                             
                         
                         if not q: confirm = True  
-                        
-                        #print(filemon.name)
-                        #print(filemon.rawStats)
-
                     else:
                         
                         textToAdd = (" | " + status)
@@ -136,7 +138,12 @@ def play_game():
                     #world.generateWorld(player.position, player)            
         
                 if(input == 'w'):
-                    player.position-=1
+                    status = world.interact(player, -1)
+                    if (isinstance(status, os.DirEntry) and (status.path in player.previouslyEncountered)):
+                        
+                        player.position -=2
+                    else:
+                        player.position-=1
                     #world.generateWorld(player.position, player)
         
                 if(input == 'm'):
@@ -148,7 +155,7 @@ def play_game():
                 interface.addToLog(textToAdd)
                 textToAdd = ""
                 world.generateWorld(player.position, player)
-                
+                status = None
             case 'BATTLE':
                 confirm = False
                 

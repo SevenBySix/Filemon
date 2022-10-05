@@ -18,6 +18,7 @@ class Player(object):
         self.currentDir = directory #THIS IS A STRING REPRESENTING A PATH
         self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         self.filemons = [] #The array of filemons
+        self.previouslyEncountered = []
         
     
 
@@ -34,5 +35,8 @@ class Player(object):
 
     def addFilemon(self, filemon):
         self.filemons.append(filemon)
+        self.previouslyEncountered.append(filemon.path)
+        self.position -=1
+        
 
 
