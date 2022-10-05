@@ -67,13 +67,14 @@ def play_game():
             case 'WOLRD':
                 
                 if(input == 's'):
-                    status = world.interact(player, 1)
+                    player.position+=1
+                    status = world.interact(player, 0)
                     
                     if (isinstance(status, os.DirEntry)) and (status.path in player.previouslyEncountered):
-                        
-                        player.position +=2
-                    else:
-                        player.position+=1
+                        #pass
+                        interface.addToLog('ran')
+                        player.position +=1
+                    
                     
                     #world.generateWorld(player.position, player)
                     
@@ -138,13 +139,12 @@ def play_game():
                     #world.generateWorld(player.position, player)            
         
                 if(input == 'w'):
-                    status = world.interact(player, -1)
-                    if (isinstance(status, os.DirEntry) and (status.path in player.previouslyEncountered)):
-                        
-                        player.position -=2
-                    else:
-                        player.position-=1
-                    #world.generateWorld(player.position, player)
+                    player.position-=1
+                    status = world.interact(player, 0)
+                    
+                    if (isinstance(status, os.DirEntry)) and (status.path in player.previouslyEncountered):
+                        interface.addToLog('ran')
+                        player.position -=1
         
                 if(input == 'm'):
                     #MENU

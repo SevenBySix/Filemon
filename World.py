@@ -33,9 +33,7 @@ class World(object):
     def populateFilenames(self, player):
         self.filenames = []
         for file in os.scandir(player.currentDir):
-            if file.path not in player.previouslyEncountered:
-
-                self.filenames.append(file.name)
+            self.filenames.append((file.name, file.path))
         #print(self.filenames)
         pass
 
@@ -114,20 +112,26 @@ class World(object):
         self.populateFilenames(player)
         
         character = "@"
-        worldSize = len(self.filenames)
+        
         finishedWorld = ''
         position = 0
         for filename in self.filenames:
-            if position == characterPosition:
-                partialLine = '|       ' + character + ' ' + filename
+            if filename[1] in player.previouslyEncountered:
+                pass
+                
+            elif position == characterPosition:
+                
+                partialLine = '|       ' + character + ' ' + filename[0]
             else:
-                partialLine = '|         ' +  filename
+                
+                partialLine = '|         ' +  filename[0]
 
             for i in range(len(partialLine), 60):
                 partialLine += ' '
             partialLine += '|\n'
             finishedWorld += partialLine
             position+=1
+            partialLine = ''
         finishedWorld = finishedWorld[:len(finishedWorld)-1]
         print(finishedWorld)
         pass
