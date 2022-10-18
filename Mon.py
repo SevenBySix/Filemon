@@ -21,7 +21,10 @@ class Mon(object):
         self.type = self.getExt(name)
         '''just (hp, attack) to start off with'''
         self.stats = (self.rawStats[6]%1000, hash((self.type))%100)
+        #the hp stat in the tuple is max hp and is not modifed, the hp stat below will be modifed, the allows
+        #us to reliably put the filemon back to its max hp
         self.path = path
+        self.hp = self.stats[0]
 
     def getExt(self, name):
         '''if(len(name) < 4):
@@ -33,10 +36,10 @@ class Mon(object):
         ext = ''
         
         for char in reversed(name):
-            if char is '.':
-                return ext
+            if char == '.':
+                return reversed(ext)
             ext += char
-
+        
         #if the file has no extension on its name, return file for consistancy purposes
         return 'file'
 

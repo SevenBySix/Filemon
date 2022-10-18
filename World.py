@@ -108,7 +108,7 @@ class World(object):
         return player.currentDir
 
     def generateWorld(self, characterPosition, player):
-        
+        partialLine= ''
         self.populateFilenames(player)
         
         character = "@"

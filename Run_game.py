@@ -123,7 +123,7 @@ def play_game():
                                 
                             else:
                                 interface.setModeBattle()
-                            
+                        print('DEBUG'+str(filemon.stats[0])+ ' ' + str(filemon.rawStats[6])+ ' '+ str(filemon.stats[1]))
                         
                         if not q: confirm = True  
                     else:

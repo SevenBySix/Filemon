@@ -111,7 +111,7 @@ class Interface(object):
         screen = '''
 |                                                            |
 |    [playerMon         ]            [enemyMon          ]    |
-|    (=========)                               (========)    |
+|    (==================)            (==================)    |
 |                                                            |
 |                                                            |
 |                                                            |
@@ -121,8 +121,10 @@ class Interface(object):
         #sys.stdout.write("test")
         #sys.stdout.flush()
         firstLine = '''
-|                                                            |'''
-        firstMon = player.filemons[0]
+|                                                           |'''
+        firstMon = player.filemons[0] #the filemon used will always be the players first filemon
+                                      #if we need to switch filemon we are going to swap the position of filemon
+                                      #in the characters inventory
         playerMonName = firstMon.name
         enemyName = filemon.name
 
@@ -137,8 +139,23 @@ class Interface(object):
         sumChars = len(playerMonName) + len(enemyName) + 4
         numSpaces = 50 - sumChars
         nameLine = '|    ' + '[' + playerMonName + ']' + (' ' * numSpaces) + ' '  + '[' +enemyName + ']' + '    |'
+        print(firstLine)
         print(nameLine)
-        print('debug')
+        #int((player.hp/player.stats[0]) * 18) getting number of equal signs to represent hpq
+        # 
+        #18 chars
+        numEquals = int((firstMon.hp/firstMon.stats[0]) * 18)
+        numSpaces = 18-numEquals
+
+        print('|    ('+ (numEquals*'=')+(numSpaces*' ') +')           ('+
+              (int((filemon.hp/filemon.stats[0]) * 18)*'=') + ((18-(int(filemon.hp/filemon.stats[0]))*18)*' ') + ')    |')
+
+        print(firstLine)
+        print(firstLine)
+        print(firstLine)
+
+
+        print('\ndebug\n')
         return False #when finished return true
         
 
