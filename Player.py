@@ -19,6 +19,7 @@ class Player(object):
         self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         self.filemons = [] #The array of filemons
         self.previouslyEncountered = []
+        self.inventory = []
         
     
 

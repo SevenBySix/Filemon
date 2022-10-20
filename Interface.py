@@ -1,6 +1,6 @@
 from tokenize import String
 import keyboard
-
+import random
 
 class MODES:
     START = "START"
@@ -30,6 +30,11 @@ class Interface(object):
 |                                                            |'''
         self.log = ''
         
+        self.battlePosition = 1
+        self.battleLog = ''
+        self.firstGo = True #so that we can print battle or trade screens
+                            #before we collect user input
+        self.inventoryPosition = 0 #position of 0 represents inventory not being open
 
     def printHud(self):
               #remember the game screen is 60 characters long           v60v
@@ -120,8 +125,7 @@ class Interface(object):
 |    [    Battle Log                                    ]    |'''
         #sys.stdout.write("test")
         #sys.stdout.flush()
-        firstLine = '''
-|                                                           |'''
+        firstLine = '''|                                                           |'''
         firstMon = player.filemons[0] #the filemon used will always be the players first filemon
                                       #if we need to switch filemon we are going to swap the position of filemon
                                       #in the characters inventory
@@ -136,6 +140,7 @@ class Interface(object):
             enemyName = enemyName[:len(playerMonName) - len(ext)] + ext
         
 
+
         sumChars = len(playerMonName) + len(enemyName) + 4
         numSpaces = 50 - sumChars
         nameLine = '|    ' + '[' + playerMonName + ']' + (' ' * numSpaces) + ' '  + '[' +enemyName + ']' + '    |'
@@ -144,18 +149,127 @@ class Interface(object):
         #int((player.hp/player.stats[0]) * 18) getting number of equal signs to represent hpq
         # 
         #18 chars
-        numEquals = int((firstMon.hp/firstMon.stats[0]) * 18)
+
+        ''' for reference
+|                                                            |
+|    [playerMon         ]            [enemyMon          ]    |
+|    (==================)            (==================)    |
+|                                                            |
+|                                                            |
+|                                                            |
+|   >Fight1 Inventory2                                       |
+|    Info3  Flee4                                            |
+|    [    Battle Log                                    ]    |'''
+        if not self.firstGo:
+
+
+            if input == 'e':
+                
+                
+                if self.inventoryPosition == 0:
+                    
+
+                    #we dont want to do battle menu things if the inventory is open
+                    if self.battlePosition == 1:
+
+                        filemon.hp-=player.filemons[0].stats[1]
+                        player.filemons[0].hp -= filemon.hp
+                        if player.filemons[0].hp <= 0:
+                            player.filemons[0].hp = 0
+                            player.filemons[0].hp = player.filemons[0].stats[0]
+
+                            return True
+
+                        if filemon.hp <= 0:
+                            filemon.hp = 0
+
+                            return True
+
+                        self.battleLog = 'attacked for '+str(player.filemons[0].stats[1])+ ' damage'
+                    if self.battlePosition == 2:
+                        self.inventoryPosition = 1
+                    if self.battlePosition == 3:
+                        pass
+                    if self.battlePosition == 4:
+                        if random.randrange(0, 100) > 70:
+                            self.firstGo = True
+                            return True
+                else:
+                    #inventory position is not zer, so inventory events must occur instead
+                    pass
+
+            '''
+            |   >Fight1 Inventory2                                       |
+            |    Info3  Flee4                                            |'''
+            if input == 'w':
+                #battleposition
+                if self.battlePosition == 3:
+                    self.battlePosition = 1
+                if self.battlePosition == 4:
+                    self.battlePosition = 2
+                
+            if input == 's':
+                if self.battlePosition == 1:
+                    self.battlePosition = 3
+                if self.battlePosition == 2:
+                    self.battlePosition = 4
+            if input == 'a':
+                if self.inventoryPosition != 0:
+                    inventoryPosition -=1
+                else:
+                    if self.battlePosition == 2:
+                        self.battlePosition = 1
+                    if self.battlePosition == 4:
+                        self.battlePosition = 3
+            if input == 'd':
+                if self.inventoryPosition != 0:
+                    inventoryPosition +=1 #scrolling all the way to the left of the inventory
+                                          #will have the effect of exiting the inventory
+                else:
+                    if self.battlePosition == 1:
+                        self.battlePosition = 2
+                    if self.battlePosition == 3:
+                        self.battlePosition = 4
+        else:
+            self.firstGo = False
+
+        numEquals = int((player.filemons[0].hp/player.filemons[0].stats[0]) * 18)
         numSpaces = 18-numEquals
+        numEqualsEn = int((filemon.hp/filemon.stats[0]) * 18)
+        numSpacesEn = 18-numEqualsEn
+
 
         print('|    ('+ (numEquals*'=')+(numSpaces*' ') +')           ('+
-              (int((filemon.hp/filemon.stats[0]) * 18)*'=') + ((18-(int(filemon.hp/filemon.stats[0]))*18)*' ') + ')    |')
-
+              (numEqualsEn*'=') + (numSpacesEn*' ') + ')    |')
+        numEquals = 0
+        numEqualsEn = 0
         print(firstLine)
         print(firstLine)
-        print(firstLine)
+        
+        cursorPosition = 7
+        if self.inventoryPosition == 0:
+            match self.battlePosition:
+                case 1:
+                    cursorPosition = 4
+                case 2:
+                    cursorPosition = 11
+                case 3:
+                    cursorPosition = 66
+                case 4:
+                    cursorPosition = 73
 
+            battleLines = '''|    Fight1 Inventory2                                      |
+|    Info3  Flee4                                           |'''
+            battleLines = list(battleLines)
+            battleLines[cursorPosition] = '>'
+            battleLines = ''.join(battleLines)
 
-        print('\ndebug\n')
+            print(battleLines)
+
+            print('|    [    '+self.battleLog+ (((45 - len(self.battleLog))*' '))+']    |')
+            self.battleLog = ''
+
+        print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(self.battlePosition)+ '  \n')
         return False #when finished return true
         
 

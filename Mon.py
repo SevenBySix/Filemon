@@ -9,7 +9,7 @@
 #came from, or in the case of trading deleting it and adding the newly recieved mon instance
 
 from os import name
-
+import random
 
 class Mon(object):
     '''('desktop.ini', 
@@ -20,11 +20,16 @@ class Mon(object):
         self.rawStats = fileStats
         self.type = self.getExt(name)
         '''just (hp, attack) to start off with'''
-        self.stats = (self.rawStats[6]%1000, hash((self.type))%100)
+
+        self.stats = [self.rawStats[6]%1000, hash((self.type))%100]
         #the hp stat in the tuple is max hp and is not modifed, the hp stat below will be modifed, the allows
         #us to reliably put the filemon back to its max hp
         self.path = path
+        
+        if self.stats[0] == 0:
+            self.stats[0] = random.randrange(400, 1000)
         self.hp = self.stats[0]
+            
 
     def getExt(self, name):
         '''if(len(name) < 4):
@@ -37,7 +42,8 @@ class Mon(object):
         
         for char in reversed(name):
             if char == '.':
-                return reversed(ext)
+                ext = ''.join(reversed(ext))
+                return ext
             ext += char
         
         #if the file has no extension on its name, return file for consistancy purposes
