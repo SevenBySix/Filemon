@@ -25,7 +25,10 @@ def play_game():
     
     
     #world.generateWorld(4)
-    startingDir = os.getcwd() + '/home'
+    if platform == 'linux':
+        startingDir = os.getcwd() + '/home'
+    else:
+        startingDir = os.getcwd() + '\\home'
     
     player = Player.Player(startingDir, 0) #this should pull data from save as it is initialized
     world = World.World(player.currentDir, player.position)

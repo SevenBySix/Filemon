@@ -132,6 +132,8 @@ class Interface(object):
         playerMonName = firstMon.name
         enemyName = filemon.name
 
+        inventory = player.inventory + player.filemons #battle uses a combined player and filemon inventory
+
         if(len(playerMonName) > 19):
             ext = '.' + firstMon.type
             playerMonName = playerMonName[:(len(playerMonName) - len(ext))] + ext
@@ -175,14 +177,14 @@ class Interface(object):
                         filemon.hp-=player.filemons[0].stats[1]
                         player.filemons[0].hp -= filemon.hp
                         if player.filemons[0].hp <= 0:
-                            player.filemons[0].hp = 0
-                            player.filemons[0].hp = player.filemons[0].stats[0]
-
+                            
+                            player.filemons[0].hp = player.filemons[0].stats[0] #this will ultimately need to be changed to something that swaps the fainted mon to the next mon
+                            self.firstGo = True
                             return True
 
                         if filemon.hp <= 0:
                             filemon.hp = 0
-
+                            self.firstGo = True
                             return True
 
                         self.battleLog = 'attacked for '+str(player.filemons[0].stats[1])+ ' damage'
@@ -215,7 +217,7 @@ class Interface(object):
                     self.battlePosition = 4
             if input == 'a':
                 if self.inventoryPosition != 0:
-                    inventoryPosition -=1
+                    self.inventoryPosition -=1
                 else:
                     if self.battlePosition == 2:
                         self.battlePosition = 1
@@ -223,7 +225,7 @@ class Interface(object):
                         self.battlePosition = 3
             if input == 'd':
                 if self.inventoryPosition != 0:
-                    inventoryPosition +=1 #scrolling all the way to the left of the inventory
+                    self.inventoryPosition +=1 #scrolling all the way to the left of the inventory
                                           #will have the effect of exiting the inventory
                 else:
                     if self.battlePosition == 1:
@@ -269,13 +271,32 @@ class Interface(object):
             print('|    [    '+self.battleLog+ (((45 - len(self.battleLog))*' '))+']    |')
             self.battleLog = ''
         elif self.inventoryPosition >= 1:
-            invLine = '|    '
-            positionItem = ()
+            invLine = ''
+            positionItem = []
             i = 1
+
             for item in player.inventory:
-                positionItem.append(i, item.name)
+                positionItem.append((i, item))
+                i += 1
+            lineDone = False #tracking if the selected item is inside of the line of inventory we're constructing
+            for item in positionItem:
+                templine = invLine + item[1]
                 
-            pass
+
+                
+
+                
+                if(self.inventoryPosition == item[0]):
+                    invLine += ' >'
+                    lineDone = True
+                else:
+                    invLine += '  '
+                print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(item[0])+ '  \n' + str(positionItem) + ' ')
+                invLine+=item[1]
+            invLine += '    |'
+            print('|    '+invLine)
+                
+            
         print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(self.battlePosition)+ '  \n')
         return False #when finished return true
         

@@ -19,7 +19,7 @@ class Player(object):
         self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         self.filemons = [] #The array of filemons
         self.previouslyEncountered = []
-        self.inventory = []
+        self.inventory = ['Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera'] #these are the basic items the player will have, more may be added or found depending on if time permits
         
     
 
@@ -38,6 +38,8 @@ class Player(object):
         self.filemons.append(filemon)
         self.previouslyEncountered.append(filemon.path)
         self.position -=1
+
+    
         
 
 
