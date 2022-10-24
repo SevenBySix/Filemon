@@ -2,7 +2,8 @@
 
 
 #this is the method that will likely contain the loop which makes the game go
-from msilib.schema import File
+#from msilib.schema import File
+
 import string
 import World
 import Interface
@@ -10,6 +11,7 @@ import os
 import time
 import Player
 import Mon
+from sys import platform
 #import sys
 
 def play_game():
@@ -23,7 +25,7 @@ def play_game():
     
     
     #world.generateWorld(4)
-    startingDir = os.getcwd() + '\\home'
+    startingDir = os.getcwd() + '/home'
     
     player = Player.Player(startingDir, 0) #this should pull data from save as it is initialized
     world = World.World(player.currentDir, player.position)
@@ -47,7 +49,10 @@ def play_game():
             
         else:
             input = Interface.getKeyPress()
-        os.system('cls')
+        if platform == 'linux':
+            os.system('clear')
+        else:
+            os.system('cls')
         interface.clearLog()
         match interface.mode:
             case 'START':
@@ -65,7 +70,9 @@ def play_game():
                 pass
             
             case 'WOLRD':
-                
+                if(input == 'o'):
+                    isFinished = True
+
                 if(input == 's'):
                     player.position+=1
                     status = world.interact(player, 0)

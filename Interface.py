@@ -268,7 +268,14 @@ class Interface(object):
 
             print('|    [    '+self.battleLog+ (((45 - len(self.battleLog))*' '))+']    |')
             self.battleLog = ''
-
+        elif self.inventoryPosition >= 1:
+            invLine = '|    '
+            positionItem = ()
+            i = 1
+            for item in player.inventory:
+                positionItem.append(i, item.name)
+                
+            pass
         print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(self.battlePosition)+ '  \n')
         return False #when finished return true
         
