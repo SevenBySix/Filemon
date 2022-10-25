@@ -3,29 +3,25 @@ This will save the player's information: name(?), position, and filemon, as a js
 stored in a folder called "Saves".
 
 '''
-import json
+import pickle
 
-class Save_Manager():
-
+class Save_Manager(object):
+    
     def __init__(self):
-
+        
         pass
 
-    '''Saves player infromation as a json object in the saves folder'''
-    def saveGame(currentDir, pos, filemons):
-        playerInfo = {
-            "currentDir": currentDir,
-            "position": pos,
-            "filemon": filemons
-        }
-        
-        json_save = json.dumps(playerInfo, indent=4)
-        with open("GameSaves/save.json", "w") as outfile:
-            outfile.write(json_save)
-  
+    #Saves player object as a json object in the saves folder
+    def saveGame(playerObj):
+        with open('GameSaves/save.pkl', "wb") as savefile:
+            pickle.dump(playerObj, savefile)
+        savefile.close()
+    #Loads json object from save file and returns player object
     def loadGame():
-        
-        pass
+        with open('GameSaves/save.pkl', "rb") as savefile:
+            playerObj = pickle.load(savefile)
+        savefile.close()
+        return playerObj  
    
 
 

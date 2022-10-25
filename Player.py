@@ -8,7 +8,7 @@ class so our source code isnt full of attempts at working with files and writing
 
 
 '''
-
+from Save_Manager import Save_Manager
 
 #player will need to hold a vertical location and its path, its name, filemon array
 
@@ -23,15 +23,12 @@ class Player(object):
     
 
     def writeToSave(self):
-        #end state, should look something like Save_manager.write(self)
-        pass
+        Save_Manager.saveGame(self)
 
     #this will likely have to exist in some capacity, however player attributes can likely be
     #simply read from the save when the player object is initialized when the game is launched
     def readFromSave(self):
-        #should look something like Save_manager.read(self)
-        #the save manager should then set all necessary player fields to whatever attributes are contained in the save, I think this is the write way to do it
-        pass
+        self = Save_Manager.loadGame()
 
     def addFilemon(self, filemon):
         self.filemons.append(filemon)
