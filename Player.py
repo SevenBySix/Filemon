@@ -13,15 +13,15 @@ class so our source code isnt full of attempts at working with files and writing
 #player will need to hold a vertical location and its path, its name, filemon array
 
 class Player(object):
-    
+
     def __init__(self, directory, pos):
         self.currentDir = directory #THIS IS A STRING REPRESENTING A PATH
         self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         self.filemons = [] #The array of filemons
         self.previouslyEncountered = []
-        self.inventory = ['Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera'] #these are the basic items the player will have, more may be added or found depending on if time permits
-        
-    
+        self.inventory = ['Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable'] #these are the basic items the player will have, more may be added or found depending on if time permits
+
+
 
     def writeToSave(self):
         #end state, should look something like Save_manager.write(self)
@@ -39,7 +39,7 @@ class Player(object):
         self.previouslyEncountered.append(filemon.path)
         self.position -=1
 
-    
-        
+
+
 
 

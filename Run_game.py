@@ -176,7 +176,10 @@ def play_game():
                 if(interface.battle(player, filemon, input)): #the battle method returns true when battle is completed
                                                        #It will also modify the players filemon and enemy filemon
                                                        #objects appropriately
-                    os.system('cls')
+                    if platform == 'linux':
+                        os.system('clear')
+                    else:
+                        os.system('cls')
                     
                     interface.addToLog(' | Battle Completed')
                     interface.setModeWorld()

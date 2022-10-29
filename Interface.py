@@ -278,26 +278,21 @@ class Interface(object):
             for item in player.inventory:
                 positionItem.append((i, item))
                 i += 1
-            lineDone = False #tracking if the selected item is inside of the line of inventory we're constructing
-            for item in positionItem:
-                templine = invLine + item[1]
+            for item in player.filemons:
+                positionItem.append((i, item.name))
+                i += 1
+            
+            
+            invLine = '|    '+ positionItem[self.inventoryPosition][1] + ' '*(50 -len(positionItem[self.inventoryPosition][1])) 
+                    
+                        
                 
 
-                
-
-                
-                if(self.inventoryPosition == item[0]):
-                    invLine += ' >'
-                    lineDone = True
-                else:
-                    invLine += '  '
-                print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(item[0])+ '  \n' + str(positionItem) + ' ')
-                invLine+=item[1]
             invLine += '    |'
             print('|    '+invLine)
                 
             
-        print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(self.battlePosition)+ '  \n')
+        #print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(self.battlePosition)+ '  \n')
         return False #when finished return true
         
 
