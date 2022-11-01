@@ -1,30 +1,28 @@
 '''
-We are going to need something that writes to some sort of text file
-This text file will ultimately be the players save file
+This will save the player's information: name(?), position, and filemon, as a json object that will be 
+stored in a folder called "Saves".
 
 '''
+import pickle
 
-class Save_Manager():
-
-    def __init__(self):
-
-        pass
-
-
-    '''
-    This should log the players position within their file structure 
+class Save_Manager(object):
     
-    '''
-    def writePosition(self):
-
+    def __init__(self):
+        
         pass
-    '''
-    This should return a string corresponding to the path that the world
-    needs to start in
-    '''
-    def readPosition(self):
 
-        pass
+    #Saves player object as a json object in the saves folder
+    def saveGame(playerObj):
+        with open('GameSaves/save.pkl', "wb") as savefile:
+            pickle.dump(playerObj, savefile)
+        savefile.close()
+    #Loads json object from save file and returns player object
+    def loadGame():
+        with open('GameSaves/save.pkl', "rb") as savefile:
+            playerObj = pickle.load(savefile)
+        savefile.close()
+        return playerObj  
+   
 
 
 
