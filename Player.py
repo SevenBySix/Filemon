@@ -19,8 +19,8 @@ class Player(object):
         self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         self.filemons = [] #The array of filemons
         self.previouslyEncountered = []
-        self.inventory = ['Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable'] #these are the basic items the player will have, more may be added or found depending on if time permits
-
+        self.inventory = ['0', 'Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable'] #these are the basic items the player will have, more may be added or found depending on if time permits
+        #the '0' allows for easier implementation of in battle inventory
 
 
     def writeToSave(self):

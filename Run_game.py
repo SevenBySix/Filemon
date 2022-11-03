@@ -172,8 +172,9 @@ def play_game():
                 print('battle')
                 interface.addToLog(' | type: '+filemon.type)
                 filemon.displayMon()
-                
-                if(interface.battle(player, filemon, input)): #the battle method returns true when battle is completed
+                #interface.battle will now return a tuple in the form of (True/False, 'status')
+                battleTuple = interface.battle(player, filemon, input)
+                if(battleTuple[0]): #the battle method returns true when battle is completed
                                                        #It will also modify the players filemon and enemy filemon
                                                        #objects appropriately
                     if platform == 'linux':
@@ -181,7 +182,7 @@ def play_game():
                     else:
                         os.system('cls')
                     
-                    interface.addToLog(' | Battle Completed')
+                    interface.addToLog(' | Battle Completed, '+ battleTuple[1])
                     interface.setModeWorld()
                     world.generateWorld(player.position, player)
                     interface.addToLog(' | type: '+filemon.type)

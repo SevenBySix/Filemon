@@ -162,8 +162,17 @@ class Interface(object):
 |   >Fight1 Inventory2                                       |
 |    Info3  Flee4                                            |
 |    [    Battle Log                                    ]    |'''
+    
         if not self.firstGo:
-
+            positionItem = []
+            i = 1
+            #building a usable list of players inventory and filemon
+            for item in player.inventory:
+                positionItem.append((i, item))
+                i += 1
+            for item in player.filemons:
+                positionItem.append((i, item.name))
+                i += 1
 
             if input == 'e':
                 
@@ -180,12 +189,12 @@ class Interface(object):
                             
                             player.filemons[0].hp = player.filemons[0].stats[0] #this will ultimately need to be changed to something that swaps the fainted mon to the next mon
                             self.firstGo = True
-                            return True
+                            return (True, 'You where defeated')
 
                         if filemon.hp <= 0:
                             filemon.hp = 0
                             self.firstGo = True
-                            return True
+                            return (True, 'You defeated '+filemon.name)
 
                         self.battleLog = 'attacked for '+str(player.filemons[0].stats[1])+ ' damage'
                     if self.battlePosition == 2:
@@ -195,10 +204,19 @@ class Interface(object):
                     if self.battlePosition == 4:
                         if random.randrange(0, 100) > 70:
                             self.firstGo = True
-                            return True
+                            return (True, 'you fled')
                 else:
                     #inventory position is not zer, so inventory events must occur instead
-                    pass
+                    #self.inventory = ['0', 'Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable']
+                    if positionItem[self.inventoryPosition][1] == 'Capture_Device':
+                        missingHp = filemon.stats[0] - filemon.hp
+
+                        percentCapture = float(missingHp)/float(filemon.stats[0])
+                        if(random.random() < percentCapture):
+                            player.filemons.append(filemon)
+                            return (True, 'Suceesfully Captured '+filemon.name)
+                        else:
+                            self.battleLog = 'Capture Device activated: Unsuccesful'
 
             '''
             |   >Fight1 Inventory2                                       |
@@ -272,28 +290,21 @@ class Interface(object):
             self.battleLog = ''
         elif self.inventoryPosition >= 1:
             invLine = ''
-            positionItem = []
-            i = 1
-
-            for item in player.inventory:
-                positionItem.append((i, item))
-                i += 1
-            for item in player.filemons:
-                positionItem.append((i, item.name))
-                i += 1
             
             
-            invLine = '|    '+ positionItem[self.inventoryPosition][1] + ' '*(50 -len(positionItem[self.inventoryPosition][1])) 
+            
+            invLine = positionItem[self.inventoryPosition][1] + ' '*(50 -len(positionItem[self.inventoryPosition][1])) 
                     
                         
                 
 
-            invLine += '    |'
+            invLine += '     |'
             print('|    '+invLine)
+            print('|    [    '+self.battleLog+ (((45 - len(self.battleLog))*' '))+']    |')
                 
             
         #print('\ndebug '+ input + ' '+ str(self.inventoryPosition) + ' '+ str(self.battlePosition)+ '  \n')
-        return False #when finished return true
+        return (False, 'battle engaged') #when finished return true
         
 
     #prints all information related to the mon in a readable format
