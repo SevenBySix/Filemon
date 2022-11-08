@@ -19,7 +19,7 @@ class Player(object):
         self.position = pos #THIS IS A NUMBER CORRESPONDING TO HOW FAR DOWN IN THE PATH
         self.filemons = [] #The array of filemons
         self.previouslyEncountered = []
-        self.inventory = ['0', 'Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable'] #these are the basic items the player will have, more may be added or found depending on if time permits
+        self.inventory = ['Inventory: ', 'Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable'] #these are the basic items the player will have, more may be added or found depending on if time permits
         #the '0' allows for easier implementation of in battle inventory
 
 
@@ -29,7 +29,8 @@ class Player(object):
     #this will likely have to exist in some capacity, however player attributes can likely be
     #simply read from the save when the player object is initialized when the game is launched
     def readFromSave(self):
-        self = Save_Manager.loadGame()
+        return Save_Manager.loadGame()
+        
 
     def addFilemon(self, filemon):
         self.filemons.append(filemon)

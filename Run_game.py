@@ -5,6 +5,7 @@
 #from msilib.schema import File
 
 import string
+from Save_Manager import Save_Manager
 import World
 import Interface
 import os
@@ -64,13 +65,24 @@ def play_game():
                 if(command == "NEW"):
                     world.generateWorld(player.position, player)
                 if(command == "CONTINUE"):
-                    #LOAD FROM SAVE FILE INTO PLAYER
+                    player = player.readFromSave()
+                    print("LOADED")
+                    time.sleep(5)
                     world.generateWorld(player.position, player)
                 if(command == "STOP"):
                     isFinished = True
 
             case 'MENU':
-                pass
+                command = interface.menu(player, input)
+                if command == 'CONTINUE':
+                    interface.setModeWorld()
+                    skipInput = True
+                elif command == 'EXIT':
+                    isFinished = True
+                elif command == 'SAVE':
+                    player.writeToSave()
+                elif command == 'TRADE':
+                    interface.setModeTrade()
             
             case 'WOLRD':
                 if(input == 'o'):
@@ -157,8 +169,8 @@ def play_game():
                         player.position -=1
         
                 if(input == 'm'):
-                    #MENU
-                    pass
+                    interface.setModeMenu()
+                    skipInput = True
                 
                 
                 interface.addToLog(player.currentDir)
@@ -192,7 +204,14 @@ def play_game():
 
                 
             case 'TRADE':
-                pass
+                t = interface.trade(player, input)[0]
+                
+                if t[0]:
+
+                    interface.addToLog(t[1])
+                    interface.setModeWorld()
+                    world.generateWorld(player.position, player)
+
 
         interface.printLog()
         interface.clearLog()

@@ -4,7 +4,7 @@ stored in a folder called "Saves".
 
 '''
 import pickle
-
+#import pandas as pd
 class Save_Manager(object):
     
     def __init__(self):
@@ -18,6 +18,7 @@ class Save_Manager(object):
         savefile.close()
     #Loads json object from save file and returns player object
     def loadGame():
+        
         with open('GameSaves/save.pkl', "rb") as savefile:
             playerObj = pickle.load(savefile)
         savefile.close()

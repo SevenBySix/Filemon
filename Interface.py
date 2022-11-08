@@ -1,3 +1,4 @@
+from email.errors import FirstHeaderLineIsContinuationDefect
 from tokenize import String
 import keyboard
 import random
@@ -35,6 +36,10 @@ class Interface(object):
         self.firstGo = True #so that we can print battle or trade screens
                             #before we collect user input
         self.inventoryPosition = 0 #position of 0 represents inventory not being open
+        
+        self.menuArea = 'menu'
+
+        self.tradePosition = (0, 7)
 
     def printHud(self):
               #remember the game screen is 60 characters long           v60v
@@ -60,6 +65,8 @@ class Interface(object):
 
     def setModeMenu(self):
         self.mode = MODES.MENU
+        self.menuPosition = 7
+        self.firstGo = True
 
     def setModeWorld(self):
         self.mode = MODES.WORLD
@@ -70,7 +77,7 @@ class Interface(object):
 
     def setModeTrade(self):
         self.mode = MODES.TRADE
-
+        self.firstGo = True
    
     def startMenu(self, input):
 
@@ -88,6 +95,7 @@ class Interface(object):
 
 #7
         screenChars = list(screen)
+        
         match input:
             case 'w':
                 screenChars[self.menuPosition] = ' '
@@ -106,10 +114,95 @@ class Interface(object):
                 if(screenChars[self.menuPosition+1] == "C"):
                     self.setModeWorld()
                     #player populated in Run_game, not in here
+                    
                     return "CONTINUE"
                 if(screenChars[self.menuPosition+1] == "E"):
 
                     return "STOP"
+    
+    def menu(self, player, input):
+        # CONTINUE EXIT SAVE TRADE
+        constant = 63
+        menuScreen = '''
+|      CONTINUE                                              |
+|      SAVE                                                  |
+|      FILEMONS                                              |
+|      ITEMS                                                 |
+|      TRADE                                                 |
+|      EXIT                                                  |
+|                                                            |
+|                                                            |
+|                                                            |'''
+        screenChars = list(menuScreen)
+        if self.firstGo:
+            screenChars[7] = '>'
+            print(''.join(screenChars))
+            self.firstGo = False
+        else:
+            match input:
+                case 'w':
+                    screenChars[self.menuPosition] = ' '
+                    self.menuPosition-=constant
+                    screenChars[self.menuPosition] = '>'
+                    print(''.join(screenChars))
+                case 's':
+                    screenChars[self.menuPosition] = ' '
+                    self.menuPosition+=constant
+                    screenChars[self.menuPosition] = '>'
+                    print(''.join(screenChars))
+                case 'e':
+                    if(screenChars[self.menuPosition+1] == "C"):
+                        return 'CONTINUE'
+                    if(screenChars[self.menuPosition+1] == "S"):
+                        #saving handled in Run_game
+                        return 'SAVE'
+                    if(screenChars[self.menuPosition+1] == "F"):
+                        #LIST FILEMON AND STATS
+                        monList = ''
+                        for mon in player.filemons:
+                            monStats = '(hp: ' + str(mon.hp) + '/' + str(mon.stats[0]) + 'Atk: '+str(mon.stats[1]) + ')'
+
+                            monList += '|    [    ' + mon.name + (25 - len(mon.name))*' ' + monStats  + (20 - len(monStats))*' ' + ']    |' + '\n'
+                        print(monList)
+                        return "FILEMON_LIST"
+                    if(screenChars[self.menuPosition+1] == "I"):
+                        itemList = ''
+                        for item in player.inventory:
+                            itemList += '|    [    ' + item + (45 - len(item))*' ' + ']    |' + '\n'
+                        print(itemList)
+                        return "ITEMS"
+                    if(screenChars[self.menuPosition+1] == "T"):
+                    
+                        return "TRADE"
+                    
+                    if(screenChars[self.menuPosition+1] == "E"):
+
+                        return "EXIT"
+
+    def trade(player, input):
+        monList = ''
+        statusLine = ''
+        if firstRun:
+            
+
+            firstRun = False
+
+        elif input == 'w':
+            pass
+        elif input == 's':
+            pass
+        elif input == 'e':
+            pass
+
+        for mon in player.filemons:
+            monStats = '(hp: ' + str(mon.hp) + '/' + str(mon.stats[0]) + 'Atk: '+str(mon.stats[1]) + ')'
+
+            monList += '|    [    ' + mon.name + (25 - len(mon.name))*' ' + monStats  + (20 - len(monStats))*' ' + ']    |' + '\n'
+        
+        
+
+
+        return (True, 'Trade completed, recieved: ')
 
     def battle(self, player, filemon, input):
         #This function will be called upon interacting with a wild(or rather unowned) filemon
@@ -217,6 +310,8 @@ class Interface(object):
                             return (True, 'Suceesfully Captured '+filemon.name)
                         else:
                             self.battleLog = 'Capture Device activated: Unsuccesful'
+                    #elif:
+                    #other item implementation goes here
 
             '''
             |   >Fight1 Inventory2                                       |
