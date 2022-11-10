@@ -66,8 +66,7 @@ def play_game():
                     world.generateWorld(player.position, player)
                 if(command == "CONTINUE"):
                     player = player.readFromSave()
-                    print("LOADED")
-                    time.sleep(5)
+                    interface.addToLog('game loaded')
                     world.generateWorld(player.position, player)
                 if(command == "STOP"):
                     isFinished = True
@@ -81,8 +80,11 @@ def play_game():
                     isFinished = True
                 elif command == 'SAVE':
                     player.writeToSave()
+                    interface.addToLog('Game Saved')
+                    #skipInput = True
                 elif command == 'TRADE':
                     interface.setModeTrade()
+                    skipInput = True
             
             case 'WOLRD':
                 if(input == 'o'):
@@ -204,11 +206,11 @@ def play_game():
 
                 
             case 'TRADE':
-                t = interface.trade(player, input)[0]
+                done, log = interface.trade(player, input)
                 
-                if t[0]:
-
-                    interface.addToLog(t[1])
+                if done:
+                    #this should eventually be altered such that the player chooses when they want to stop trading
+                    interface.addToLog(log)
                     interface.setModeWorld()
                     world.generateWorld(player.position, player)
 

@@ -25,3 +25,17 @@ class Network:
             return reply
         except socket.error as e:
             return str(e)
+        
+    #this is what I will call from Interface to tell your network code to start
+    def startNetTradeHandler(self):
+
+        pass
+
+    #this needs to send a filemon object
+    def sendFilemon(self, filemon):
+
+        pass
+
+    #I need to be able to call this and get a filemon
+    def recieveFilemon(self):
+        return None
