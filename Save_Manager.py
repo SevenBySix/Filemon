@@ -11,16 +11,19 @@ class Save_Manager(object):
         
         pass
 
-    #Saves player object as a json object in the saves folder
+    #Saves player object to pickle file in the saves folder
     def saveGame(playerObj):
         with open('GameSaves/save.pkl', "wb") as savefile:
             pickle.dump(playerObj, savefile)
+            
         savefile.close()
-    #Loads json object from save file and returns player object
+        
+    #Loads player object from pickle file and returns player object 
     def loadGame():
         
         with open('GameSaves/save.pkl', "rb") as savefile:
             playerObj = pickle.load(savefile)
+            
         savefile.close()
         return playerObj  
    
