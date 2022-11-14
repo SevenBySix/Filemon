@@ -37,7 +37,8 @@ class Player(object):
         self.previouslyEncountered.append(filemon.path)
         self.position -=1
 
-
+    def addDefeated(self, filemon):
+        self.previouslyEncountered.append(filemon.path)
 
 
 
