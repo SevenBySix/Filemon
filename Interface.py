@@ -39,7 +39,8 @@ class Interface(object):
         
         self.menuArea = 'menu'
 
-        self.tradePosition = (0, 7)
+        self.tradePosition = [0, 9]
+        self.priorInput = ''
 
     def printHud(self):
               #remember the game screen is 60 characters long           v60v
@@ -155,6 +156,7 @@ class Interface(object):
                         return 'CONTINUE'
                     if(screenChars[self.menuPosition+1] == "S"):
                         #saving handled in Run_game
+                        print(''.join(screenChars))
                         return 'SAVE'
                     if(screenChars[self.menuPosition+1] == "F"):
                         #LIST FILEMON AND STATS
@@ -179,30 +181,48 @@ class Interface(object):
 
                         return "EXIT"
 
-    def trade(player, input):
+    def trade(self, player, input):
         monList = ''
         statusLine = ''
-        if firstRun:
-            
-
-            firstRun = False
-
-        elif input == 'w':
-            pass
-        elif input == 's':
-            pass
-        elif input == 'e':
-            pass
+        constant = 62
+        
 
         for mon in player.filemons:
             monStats = '(hp: ' + str(mon.hp) + '/' + str(mon.stats[0]) + 'Atk: '+str(mon.stats[1]) + ')'
 
             monList += '|    [    ' + mon.name + (25 - len(mon.name))*' ' + monStats  + (20 - len(monStats))*' ' + ']    |' + '\n'
+        monList = list(monList)
+        monList[self.tradePosition[1]] = ' '
+        if self.firstGo:
+            
+
+            self.firstGo = False
         
-        
+        elif input == 'w':
+            self.tradePosition[0] -= 1
+            self.tradePosition[1] -= constant
+        elif input == 's':
+            self.tradePosition[0] += 1
+            self.tradePosition[1] += constant
+        elif input == 'e':
+            
+            if self.priorInput == 'e':
+                #execute trade
+                return (True, 'Trade completed, recieved: ')
+            else:
+                self.addToLog('press E again to confirm trade')
+
+            
+        self.priorInput = input
+        monList[self.tradePosition[1]] = '>'
+
+        monList = ''.join(monList)
+        print(monList)
+
+        return False, ''
 
 
-        return (True, 'Trade completed, recieved: ')
+        
 
     def battle(self, player, filemon, input):
         #This function will be called upon interacting with a wild(or rather unowned) filemon
@@ -287,6 +307,7 @@ class Interface(object):
                         if filemon.hp <= 0:
                             filemon.hp = 0
                             self.firstGo = True
+                            player.addDefeated(filemon)
                             return (True, 'You defeated '+filemon.name)
 
                         self.battleLog = 'attacked for '+str(player.filemons[0].stats[1])+ ' damage'
@@ -306,7 +327,8 @@ class Interface(object):
 
                         percentCapture = float(missingHp)/float(filemon.stats[0])
                         if(random.random() < percentCapture):
-                            player.filemons.append(filemon)
+                            #player.filemons.append(filemon)
+                            player.addFilemon(filemon)
                             return (True, 'Suceesfully Captured '+filemon.name)
                         else:
                             self.battleLog = 'Capture Device activated: Unsuccesful'
