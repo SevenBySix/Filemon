@@ -277,7 +277,7 @@ class Interface(object):
                     if self.battlePosition == 1:
 
                         filemon.hp-=player.filemons[0].stats[1]
-                        player.filemons[0].hp -= filemon.hp
+                        player.filemons[0].hp -= filemon.stats[1]
                         if player.filemons[0].hp <= 0:
                             
                             player.filemons[0].hp = player.filemons[0].stats[0] #this will ultimately need to be changed to something that swaps the fainted mon to the next mon
@@ -310,7 +310,20 @@ class Interface(object):
                             return (True, 'Suceesfully Captured '+filemon.name)
                         else:
                             self.battleLog = 'Capture Device activated: Unsuccesful'
-                    #elif:
+                    elif positionItem[self.inventoryPosition][1] == 'Healing_Device':
+                        hpToHeal = .25 * player.filemons[0].stats[0]
+                        player.filemons[0].hp += hpToHeal
+                        if player.filemons[0].hp > player.filemons[0].stats[0]:
+                            player.filemons[0].hp = player.filemons[0].stats[0]
+                        self.battleLog = 'healed for: ' + hpToHeal
+                    elif positionItem[self.inventoryPosition][1] == 'Throwable_Rock':
+                        if filemon.hp > 5:
+                            filemon.hp-=5
+                        self.battleLog = 'That was mean!'
+                    elif positionItem[self.inventoryPosition][1] == 'Camera':
+                        with open('misc/images.txt', 'w') as f:
+                            f.write(nameLine)
+                        self.battleLog = 'images saved to: misc/images.txt'
                     #other item implementation goes here
 
             '''
