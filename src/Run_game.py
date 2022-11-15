@@ -68,6 +68,7 @@ def play_game():
                     player = player.readFromSave()
                     interface.addToLog('game loaded')
                     world.generateWorld(player.position, player)
+                    startingFlag = False
                 if(command == "STOP"):
                     isFinished = True
 

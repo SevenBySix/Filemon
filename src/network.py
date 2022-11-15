@@ -27,8 +27,8 @@ class Network:
             return str(e)
         
     #this is what I will call from Interface to tell your network code to start
-    def startNetTradeHandler(self):
-
+    def startNet(self):
+        #start thread
         pass
 
     #this needs to send a filemon object
@@ -39,3 +39,7 @@ class Network:
     #I need to be able to call this and get a filemon
     def recieveFilemon(self):
         return None
+    
+    def stopNet(self):
+        #stop thread
+        pass

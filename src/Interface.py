@@ -2,6 +2,7 @@ from email.errors import FirstHeaderLineIsContinuationDefect
 from tokenize import String
 import keyboard
 import random
+import network
 
 class MODES:
     START = "START"
@@ -41,6 +42,8 @@ class Interface(object):
 
         self.tradePosition = [0, 9]
         self.priorInput = ''
+        self.tradeReady = False
+        self.otherMon = None
 
     def printHud(self):
               #remember the game screen is 60 characters long           v60v
@@ -195,9 +198,10 @@ class Interface(object):
         monList[self.tradePosition[1]] = ' '
         if self.firstGo:
             
-
+            self.tradeReady = False
             self.firstGo = False
-        
+            self.otherMon = None
+
         elif input == 'w':
             self.tradePosition[0] -= 1
             self.tradePosition[1] -= constant
@@ -206,18 +210,26 @@ class Interface(object):
             self.tradePosition[1] += constant
         elif input == 'e':
             
-            if self.priorInput == 'e':
+            if self.priorInput == 'e' and self.TradeReady:
                 #execute trade
-                return (True, 'Trade completed, recieved: ')
+                player.filemon[self.tradePosition[0]] = self.otherMon
+                return (True, 'Trade completed, recieved: ' )
             else:
+                network.sendFilemon(player.filemons[self.tradePosition[0]])
                 self.addToLog('press E again to confirm trade')
 
-            
+        self.otherMon = network.recieveFilemon()
+
         self.priorInput = input
         monList[self.tradePosition[1]] = '>'
 
         monList = ''.join(monList)
         print(monList)
+        try:
+            print('the other player wants to send you: ' + self.otherMon.name)
+            self.TradeReady = True
+        except:
+            print('standby for other players trade selection')
 
         return False, ''
 
@@ -321,7 +333,7 @@ class Interface(object):
                             return (True, 'you fled')
                 else:
                     #inventory position is not zer, so inventory events must occur instead
-                    #self.inventory = ['0', 'Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable']
+                    #self.inventory = ['0', 'Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'mon1', 'mon2']
                     if positionItem[self.inventoryPosition][1] == 'Capture_Device':
                         missingHp = filemon.stats[0] - filemon.hp
 
@@ -329,6 +341,7 @@ class Interface(object):
                         if(random.random() < percentCapture):
                             #player.filemons.append(filemon)
                             player.addFilemon(filemon)
+                            self.battleLog = ''
                             return (True, 'Suceesfully Captured '+filemon.name)
                         else:
                             self.battleLog = 'Capture Device activated: Unsuccesful'
@@ -346,6 +359,11 @@ class Interface(object):
                         with open('misc/images.txt', 'a') as f:
                             f.writelines(nameLine+'\n')
                         self.battleLog = 'images saved to: misc/images.txt'
+                    else:
+                        monIndex = self.inventoryPosition - len(player.inventory)
+                        temp = player.filemons[0]
+                        player.filemons[0] = player.filemons[monIndex]
+                        player.filemons[monIndex] = temp
                     #other item implementation goes here
 
             '''
