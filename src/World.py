@@ -116,6 +116,8 @@ class World(object):
     def movePrevDir(self, player):
         player.currentDir = os.path.dirname(player.currentDir)
         self.populateFilenames(player)
+        if len(self.filenames) > player.position:
+            player.position %= 15
         return player.currentDir
 
     def generateWorld(self, characterPosition, player):

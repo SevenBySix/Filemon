@@ -224,9 +224,9 @@ def play_game():
         interface.printHud()
 
         time.sleep(.3) #helps prevent unwanted input from holding down keypress
-    pass
+    
 
 
 
-play_game()
+
     
