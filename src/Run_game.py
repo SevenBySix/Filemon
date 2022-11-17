@@ -5,13 +5,13 @@
 #from msilib.schema import File
 
 import string
-from Save_Manager import Save_Manager
-import World
-import Interface
+#import Save_Manager
+from src import World
+from src import Interface
 import os
 import time
-import Player
-import Mon
+from src import Player
+from src import Mon
 from sys import platform
 #import sys
 

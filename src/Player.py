@@ -8,7 +8,7 @@ class so our source code isnt full of attempts at working with files and writing
 
 
 '''
-from Save_Manager import Save_Manager
+from src import Save_Manager
 
 #player will need to hold a vertical location and its path, its name, filemon array
 

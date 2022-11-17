@@ -2,7 +2,7 @@ from email.errors import FirstHeaderLineIsContinuationDefect
 from tokenize import String
 import keyboard
 import random
-import network
+from src import network
 
 class MODES:
     START = "START"

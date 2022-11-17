@@ -1,5 +1,5 @@
 import os
-import Player
+from src import Player
 
 class World(object):
     #                                                            61 accross
