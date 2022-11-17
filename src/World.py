@@ -1,5 +1,5 @@
 import os
-from src import Player
+import src.Player
 
 class World(object):
     #                                                            61 accross
@@ -134,7 +134,7 @@ class World(object):
             partialLine = ''
         finishedWorld = finishedWorld[:len(finishedWorld)-1]
         print(finishedWorld)
-        pass
+        
 
     def clearScreen(object):
         pass

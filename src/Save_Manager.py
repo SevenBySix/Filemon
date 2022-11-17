@@ -5,6 +5,7 @@ stored in a folder called "Saves".
 '''
 import pickle
 #import pandas as pd
+import src.Player as Player
 class Save_Manager(object):
     
     def __init__(self):

@@ -6,13 +6,15 @@
 
 import string
 #import Save_Manager
-from src import World
-from src import Interface
+
+import src.World as World
+import src.Interface as Interface
 import os
 import time
-from src import Player
-from src import Mon
-from sys import platform
+import src.Player as Player
+import src.Mon as Mon
+import platform
+import src.Save_Manager as Save_Manager
 #import sys
 
 def play_game():
