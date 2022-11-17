@@ -1,4 +1,4 @@
-from email.errors import FirstHeaderLineIsContinuationDefect
+﻿from email.errors import FirstHeaderLineIsContinuationDefect
 from tokenize import String
 import keyboard
 import random
@@ -19,17 +19,18 @@ class Interface(object):
 
     def __init__(self):
         self.mode = MODES.START
-        self.menuPosition = 7 #number of chars in the first menu items starts at
+        self.menuPosition = 322 #number of chars in the first menu items starts at
         self.startScreen = '''
-|     >NEW GAME                                              |
-|      CONTINUE                                              |
-|      EXIT                                                  |
-|                                                            |
-|                                                            |
-|                                                            |
-|                                                            |
-|                                                            |
-|                                                            |'''
+                                                              
+                    █〓 █ ▙▄ █☰ ▛▚▞▜ ██ ▛▟                    
+|                                                           | 
+|                                                           | 
+|                                                           | 
+|     >NEW GAME                                             | 
+|      CONTINUE                                             | 
+|      EXIT                                                 | 
+|                                                           |
+|                                                           |'''
         self.log = ''
         
         self.battlePosition = 1
@@ -62,7 +63,7 @@ class Interface(object):
 
     def printLog(self):
         
-        print(self.log)
+        print(self.log + (60-len(self.log))*' '+'|')
         
     def setModeStart(self):
         self.mode = MODES.START
@@ -86,17 +87,17 @@ class Interface(object):
     def startMenu(self, input):
 
         constant = 63 #number of chars in the next menu item is
+        
         screen = '''
-|      NEW GAME                                              |
-|      CONTINUE                                              |
-|      EXIT                                                  |
-|                                                            |
-|                                                            |
-|                                                            |
-|                                                            |
-|                                                            |
-|                                                            |'''
-
+                                                              
+                    █〓 █ ▙▄ █☰ ▛▚▞▜ ██ ▛▟                     
+|                                                           | 
+|                                                           | 
+|                                                           | 
+|      NEW GAME                                             | 
+|      CONTINUE                                             | 
+|      EXIT                                                 | 
+|                                                           | '''
 #7
         screenChars = list(screen)
         
