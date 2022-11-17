@@ -127,7 +127,7 @@ def play_game():
                         elif(startingFlag):
                             pass
                         else:
-                            textToAdd = (" | its a " + status.name + " | press e again to engage" + ' DEBUG: ' + status.path)
+                            textToAdd = (" | its a " + status.name + " | press e again to engage")
                         
                         
                         filemon = Mon.Mon(status.name, status.stat(), status.path)

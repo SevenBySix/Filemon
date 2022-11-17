@@ -2,7 +2,7 @@
 from tokenize import String
 import keyboard
 import random
-from src import network
+import src.network as network
 
 class MODES:
     START = "START"
@@ -83,7 +83,8 @@ class Interface(object):
     def setModeTrade(self):
         self.mode = MODES.TRADE
         self.firstGo = True
-   
+        #start network thread
+
     def startMenu(self, input):
 
         constant = 63 #number of chars in the next menu item is
@@ -202,6 +203,7 @@ class Interface(object):
             self.tradeReady = False
             self.firstGo = False
             self.otherMon = None
+
 
         elif input == 'w':
             self.tradePosition[0] -= 1
