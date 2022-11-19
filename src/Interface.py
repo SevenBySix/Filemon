@@ -261,7 +261,7 @@ class Interface(object):
         playerMonName = firstMon.name
         enemyName = filemon.name
 
-        inventory = player.inventory + player.filemons #battle uses a combined player and filemon inventory
+        inventorySize = len(player.inventory) + len(player.filemons) #battle uses a combined player and filemon inventory
 
         if(len(playerMonName) > 19):
             ext = '.' + firstMon.type
@@ -394,9 +394,10 @@ class Interface(object):
                     if self.battlePosition == 4:
                         self.battlePosition = 3
             if input == 'd':
-                if self.inventoryPosition != 0:
+                if self.inventoryPosition != 0 and self.inventoryPosition+1 < inventorySize:
                     self.inventoryPosition +=1 #scrolling all the way to the left of the inventory
                                           #will have the effect of exiting the inventory
+                    
                 else:
                     if self.battlePosition == 1:
                         self.battlePosition = 2

@@ -46,13 +46,13 @@ def play_game():
     confirm = False
     skipInput = False
     startingFlag = True
-
+    status = ''
     while(not isFinished):
         #we should somehow clear our terminal sessions output here
         
         if skipInput: 
             skipInput = False
-            
+            input = ''
         else:
             input = Interface.getKeyPress()
         if platform == 'linux':
@@ -79,6 +79,7 @@ def play_game():
                 if command == 'CONTINUE':
                     interface.setModeWorld()
                     skipInput = True
+                    
                 elif command == 'EXIT':
                     isFinished = True
                 elif command == 'SAVE':
@@ -154,7 +155,8 @@ def play_game():
                         
                         if not q: confirm = True  
                     else:
-                        
+                        if status == None:
+                            status = 'theres nothing here, press d'
                         textToAdd = (" | " + status)
                 else:
                     confirm = False
