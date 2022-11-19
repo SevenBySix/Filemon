@@ -32,9 +32,20 @@ class World(object):
 
     def populateFilenames(self, player):
         self.filenames = []
+        page = player.position//15
+        toskip = 15*page
+        i = 0
+        
         for file in os.scandir(player.currentDir):
-            self.filenames.append((file.name, file.path))
-        #print(self.filenames)
+            if toskip > 0:
+                toskip-=1
+            else:
+                self.filenames.append((file.name, file.path))
+                i+=1
+            if i > 15:
+                break
+
+        
         pass
 
 
@@ -105,6 +116,8 @@ class World(object):
     def movePrevDir(self, player):
         player.currentDir = os.path.dirname(player.currentDir)
         self.populateFilenames(player)
+        if len(self.filenames) > player.position:
+            player.position %= 15
         return player.currentDir
 
     def generateWorld(self, characterPosition, player):
@@ -115,6 +128,7 @@ class World(object):
         
         finishedWorld = ''
         position = 0
+        characterPosition = characterPosition%15
         for filename in self.filenames:
             if filename[1] in player.previouslyEncountered:
                 pass
@@ -129,6 +143,7 @@ class World(object):
             for i in range(len(partialLine), 60):
                 partialLine += ' '
             partialLine += '|\n'
+            
             finishedWorld += partialLine
             position+=1
             partialLine = ''

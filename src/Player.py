@@ -22,15 +22,15 @@ class Player(object):
         self.previouslyEncountered = []
         self.inventory = ['Inventory: ', 'Capture_Device', 'Healing_Device', 'Throwable_Rock', 'Camera', 'testThing1', 'testThing2', 'disposableThing', 'OtherDisposable'] #these are the basic items the player will have, more may be added or found depending on if time permits
         #the '0' allows for easier implementation of in battle inventory
-        self.manager = Save_Manager.Save_Manager()
+        
 
     def writeToSave(self):
-        self.manager.saveGame(self)
+        Save_Manager.saveGame(self)
 
     #this will likely have to exist in some capacity, however player attributes can likely be
     #simply read from the save when the player object is initialized when the game is launched
     def readFromSave(self):
-        return self.manager.loadGame()
+        return Save_Manager.loadGame()
         
 
     def addFilemon(self, filemon):
