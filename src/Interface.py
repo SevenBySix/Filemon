@@ -183,7 +183,8 @@ class Interface(object):
                     if(screenChars[self.menuPosition+1] == "E"):
 
                         return "EXIT"
-
+                case _:
+                    print(''.join(screenChars))
     def trade(self, player, input):
         monList = ''
         statusLine = ''
