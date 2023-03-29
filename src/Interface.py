@@ -3,7 +3,7 @@ from tokenize import String
 import keyboard
 import random
 import src.network as network
-
+import src.Run_game as Run_game
 class MODES:
     START = "START"
     MENU = "MENU"
@@ -49,7 +49,7 @@ class Interface(object):
     def printHud(self):
               #remember the game screen is 60 characters long           v60v
               #123456789012345678901234567890123456789012345678901234567890
-        print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC |")
+        print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:  M |")
         pass
 
     def addToLog(self, new):
@@ -186,7 +186,12 @@ class Interface(object):
 
                         return "EXIT"
                 case _:
-                    print(''.join(screenChars))
+                    #print(''.join(screenChars))
+                    itemList = ''
+                    for item in player.inventory:
+                        itemList += '|    [    ' + item + (45 - len(item))*' ' + ']    |' + '\n'
+                    print(itemList)
+                    return "ITEMS"
     def trade(self, player, input):
         monList = ''
         statusLine = ''
@@ -265,18 +270,19 @@ class Interface(object):
 
         if(len(playerMonName) > 19):
             ext = '.' + firstMon.type
-            playerMonName = playerMonName[:(len(playerMonName) - len(ext))] + ext
+            #playerMonName = playerMonName[:(len(playerMonName) - len(ext))] + ext
+            playerMonName = playerMonName[:(19 - len(ext))] + ext
         if(len(enemyName) > 19):
             ext = '.' + filemon.type
-            enemyName = enemyName[:len(playerMonName) - len(ext)] + ext
+            enemyName = enemyName[:(19 - len(ext))] + ext
         
 
 
         sumChars = len(playerMonName) + len(enemyName) + 4
         numSpaces = 50 - sumChars
-        nameLine = '|    ' + '[' + playerMonName + ']' + (' ' * numSpaces) + ' '  + '[' +enemyName + ']' + '    |'
-        print(firstLine)
-        print(nameLine)
+        #nameLine = '|    ' + '[' + playerMonName + ']' + (' ' * numSpaces) + ' '  + '[' +enemyName + ']' + '    |'
+        #print(firstLine)
+        #print(nameLine)
         #int((player.hp/player.stats[0]) * 18) getting number of equal signs to represent hpq
         # 
         #18 chars
@@ -367,7 +373,11 @@ class Interface(object):
                         monIndex = self.inventoryPosition - len(player.inventory)
                         temp = player.filemons[0]
                         player.filemons[0] = player.filemons[monIndex]
+                        positionItem[len(player.inventory)] =  (len(player.inventory), player.filemons[0].name)
                         player.filemons[monIndex] = temp
+                        positionItem[self.inventoryPosition] =  (self.inventoryPosition, player.filemons[monIndex].name)
+                        
+                        
                     #other item implementation goes here
 
             '''
@@ -406,6 +416,33 @@ class Interface(object):
         else:
             self.firstGo = False
 
+
+        #playerMonName = firstMon.name
+        #enemyName = filemon.name
+        firstMon = player.filemons[0] #the filemon used will always be the players first filemon
+                                      #if we need to switch filemon we are going to swap the position of filemon
+                                      #in the characters inventory
+        playerMonName = firstMon.name
+        enemyName = filemon.name
+
+        
+
+        if(len(playerMonName) > 19):
+            ext = '.' + firstMon.type
+            #playerMonName = playerMonName[:(len(playerMonName) - len(ext))] + ext
+            playerMonName = playerMonName[:(19 - len(ext))] + ext
+        if(len(enemyName) > 19):
+            ext = '.' + filemon.type
+            enemyName = enemyName[:(19 - len(ext))] + ext
+        
+
+
+        sumChars = len(playerMonName) + len(enemyName) + 4
+        numSpaces = 50 - sumChars
+        nameLine = '|    ' + '[' + playerMonName + ']' + (' ' * numSpaces) + ' '  + '[' +enemyName + ']' + '    |'
+        print(firstLine)
+        print(nameLine)
+
         numEquals = int((player.filemons[0].hp/player.filemons[0].stats[0]) * 18)
         numSpaces = 18-numEquals
         numEqualsEn = int((filemon.hp/filemon.stats[0]) * 18)
@@ -436,21 +473,12 @@ class Interface(object):
             battleLines = list(battleLines)
             battleLines[cursorPosition] = '>'
             battleLines = ''.join(battleLines)
-
             print(battleLines)
-
             print('|    [    '+self.battleLog+ (((45 - len(self.battleLog))*' '))+']    |')
             self.battleLog = ''
         elif self.inventoryPosition >= 1:
             invLine = ''
-            
-            
-            
             invLine = positionItem[self.inventoryPosition][1] + ' '*(50 -len(positionItem[self.inventoryPosition][1])) 
-                    
-                        
-                
-
             invLine += '     |'
             print('|    '+invLine)
             print('|    [    '+self.battleLog+ (((45 - len(self.battleLog))*' '))+']    |')
@@ -474,7 +502,7 @@ class Interface(object):
     def printHud(self):
                   #remember the game screen is 60 characters long           v60v
                   #123456789012345678901234567890123456789012345678901234567890
-            print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC |")
+            print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:  M |")
             pass
 
 
@@ -485,7 +513,7 @@ def getKeyPress():
 def printHud():
           #remember the game screen is 60 characters long           v60v
           #123456789012345678901234567890123456789012345678901234567890
-    print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:ESC |")
+    print("| up:W  down:S  left:A  right:D  interact:E   menu/quit:  M |")
 
 
 
